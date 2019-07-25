@@ -7,5 +7,5 @@ import {Component} from '@angular/core';
 })
 
 export class LoginComponent {
-  type = 1;
+  newUser = 1;
 }
