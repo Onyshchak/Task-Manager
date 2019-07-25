@@ -1,0 +1,18 @@
+.login {
+  padding: 1em;
+
+  &--title {
+    display: flex;
+    justify-content: center;
+  }
+
+  &--fields {
+    margin: 1em auto;
+    max-width: 20em;
+  }
+
+  &--confirm {
+    display: flex;
+    margin: 1em auto;
+  }
+}
