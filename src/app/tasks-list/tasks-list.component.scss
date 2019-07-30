@@ -1,0 +1,22 @@
+.tasks-list {
+  margin: auto;
+  max-width: 70em;
+  padding: 0.5em;
+
+  &--task {
+    padding: 0;
+
+    &--buttons {
+      display: flex;
+      justify-content: space-between;
+
+      .btn {
+        width: 6em;
+      }
+    }
+  }
+}
+
+.empty-list {
+  text-align: center;
+}

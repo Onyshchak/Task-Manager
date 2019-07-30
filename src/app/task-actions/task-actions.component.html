@@ -1,0 +1,33 @@
+<section class="task-actions">
+  <form (submit)="onConfirm(taskForm)" #taskForm="ngForm" class="task-actions--form">
+
+    <h4>{{newTask ? 'Create task' : 'Edit Task'}}</h4>
+
+    <input
+      type="text"
+      name="title"
+      class="form-control"
+      placeholder="Name"
+      ngModel
+      required
+      minlength="3"
+      #title="ngModel"
+    >
+    <small *ngIf="title.invalid" class="form-text text-muted">Too short name</small>
+
+    <textarea
+      name="description"
+      class="form-control"
+      placeholder="Description"
+      rows="3"
+      ngModel
+      required
+      minlength="5"
+      #description="ngModel"
+    ></textarea>
+    <small *ngIf="description.invalid" class="form-text text-muted">Too short description</small>
+
+    <button type="onConfirm" class="btn btn-outline-primary login--confirm">Confirm</button>
+
+  </form>
+</section>

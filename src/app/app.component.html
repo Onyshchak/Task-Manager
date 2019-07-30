@@ -1,24 +1,26 @@
-Welcome to {{ title }}!
-<br><br><br>
+<!--<ul class="nav nav-pills">-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" routerLink="/">Home</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" routerLink="/login">Sign In</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" routerLink="/task-actions">Tasks actions</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" routerLink="/share">Share</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" routerLink="/tasks-list">Tasks list</a>-->
+<!--  </li>-->
+<!--</ul>-->
 
-<section class="nav">
-  <a routerLink="/">Home</a>
-  <a routerLink="/login">Sign In</a>
-  <a routerLink="/new-task">New Task</a>
-  <a routerLink="/edit">Edit</a>
-  <a routerLink="/share">Share</a>
-  <a routerLink="/tasks-list">Tasks list</a>
+<section>
+  <app-task></app-task>
+  <app-tasks-list></app-tasks-list>
 </section>
 
-<ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/">Log Out</a>
-  </li>
-</ul>
-
 <br><br><br>
 
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->

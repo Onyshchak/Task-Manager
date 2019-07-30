@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-login',
@@ -7,5 +8,31 @@ import {Component} from '@angular/core';
 })
 
 export class LoginComponent {
-  newUser = 1;
+
+  constructor(private taskService: TaskService) {}
+
+  newUser: boolean = true;
+  email = '';
+  passwordCheck = '';
+  password = '';
+
+  confirm() {
+    const user = {
+      email: this.email,
+      passwordCheck: this.passwordCheck,
+      password: this.password
+    };
+
+
+    console.log(user);
+    // try {
+    //   if (false) {
+    //     throw Error;
+    //   }
+    //   console.log(this.userData);
+    //   this.taskService.addTask(this.userData).subscribe();
+    // } catch (e) {
+    //
+    // }
+  }
 }
