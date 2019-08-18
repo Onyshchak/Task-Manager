@@ -3,14 +3,17 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbar">
+  <div
+    *ngIf="authService.loggedIn()"
+    class="collapse navbar-collapse"
+    id="navbar"
+  >
     <div class="navbar-nav mr-auto">
       <a class="nav-item nav-link" routerLink="/tasks">Tasks</a>
       <a class="nav-item nav-link" routerLink="/create-task">New Task</a>
     </div>
     <div class="navbar-nav">
       <a class="nav-item nav-link"
-         *ngIf="authService.loggedIn()"
          (click)="authService.logoutUser()"
       >Logout</a>
     </div>
