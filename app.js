@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const uri = 'mongodb+srv://task-admin:Abra-1024@cluster0-uz85s.mongodb.net/test';
 const cors = require('cors');
+dotenv.config();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -10,8 +11,13 @@ app.use(express.json());
 
 //Import Routes
 const taskRoute = require('./routes/tasks');
+const authRoute = require('./routes/auth');
+const shareRoute = require('./routes/share');
 
-app.use('/tasks', taskRoute);
+//Route Middlewares
+app.use('/api/tasks', taskRoute);
+app.use('/api/user', authRoute);
+app.use('/api/share', shareRoute);
 
 //ROUTES
 app.get('/', (req, res) => {
@@ -19,9 +25,8 @@ app.get('/', (req, res) => {
 });
 
 //Connect to DB
-
 mongoose.connect(
-  uri,
+  process.env.DB_CONNECT,
   { useNewUrlParser: true },
   () =>  console.log('connected to db'));
 
