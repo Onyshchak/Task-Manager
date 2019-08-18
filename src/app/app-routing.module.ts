@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { TaskActionsComponent } from './task-actions/task-actions.component';
-import { ShareComponent } from './share/share.component';
-import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { AuthComponent } from './auth/auth.component';
+import { NewTaskComponent } from './new-task/new-task.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'task-actions', component: TaskActionsComponent},
-  {path: 'share', component: ShareComponent},
-  {path: 'tasks-list', component: TasksListComponent},
+  {path: 'auth', component: AuthComponent},
+  {path: '', component: TasksComponent},
+  {path: 'create-task', component: NewTaskComponent},
+  {path: 'tasks', component: TasksComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

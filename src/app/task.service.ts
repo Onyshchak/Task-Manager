@@ -1,52 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from './task.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 
 export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  private tasks: Task[] = [];
-  private tasksUpdated = new Subject<Task[]>();
+  private tasksUrl = 'http://localhost:3000/api/tasks';
+  private taskShare = 'http://localhost:3000/api/share';
 
-  getTasks() {
-    return [...this.tasks];
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.tasksUrl)
   }
 
-  getTaskUpdatedListener() {
-    // return this.tasksUpdated.asObservable();
-    return this.http.get('http://localhost:3000/tasks');
+  newShare(taskId, email) {
+    return this.http.patch<Task>(`${this.taskShare}/new/${taskId}`, {access: email})
   }
 
-  // addTask(title: string, description: string) {
-  //   const task: Task = {
-  //     title: title,
-  //     description: description
-  //   };
-  //
-  //  this.tasks.push(task);
-  //  this.tasksUpdated.next([...this.tasks]);
-  //
-  //   // return this.http.post('http://localhost:3000/results', task);
-  // }
-
-  addTask(title: string, description: string) {
-    const task: Task = {
-      title: title,
-      description: description
-    };
-
-    return this.http.post('http://localhost:3000/tasks', task);
+  removeShare(taskId, email) {
+    return this.http.patch<string>(`${this.taskShare}/remove/${taskId}`, {access: email})
   }
 
-  editTask(task) {
-    return this.http.put(`http://localhost:3000/results/${task.id}`, task);
+  editTask(taskId, title, description): Observable<Task> {
+    return this.http.patch<Task>(`${this.tasksUrl}/${taskId}`, {title: title, description: description})
   }
 
-  deleteTask(task: Task) {
-    // return this.http.delete(`http://localhost:3000/results/${task.id}`, task);
+  createTask(title, description) {
+    return this.http.post<Task>(this.tasksUrl, {title: title, description: description})
+  }
+
+  deleteTask(taskId): Observable<void> {
+    return this.http.delete<void>(`${this.tasksUrl}/${taskId}`)
   }
 }

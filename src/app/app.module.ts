@@ -1,22 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { TaskActionsComponent } from './task-actions/task-actions.component';
-import { ShareComponent } from './share/share.component';
-import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { AuthComponent } from './auth/auth.component';
+import { NewTaskComponent } from './new-task/new-task.component';
+import { TasksComponent } from './tasks/tasks.component';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
+import { TaskService } from './task.service';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    TaskActionsComponent,
-    ShareComponent,
-    TasksListComponent
+    AuthComponent,
+    NewTaskComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,11 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService, TaskService, AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
