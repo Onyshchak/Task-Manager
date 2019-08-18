@@ -1,0 +1,95 @@
+<section class="auth row">
+  <div class="col-md-6 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header">
+        <h3 class="mb-0">Authorization</h3>
+      </div>
+      <div class="card-body">
+        <form class="form">
+          <div class="form-group">
+            <label for="">Email</label>
+            <input
+              type="email"
+              name="email"
+              email
+              #email="ngModel"
+              [(ngModel)]="authUserData.email"
+              class="form-control rounded-0"
+              placeholder="E-mail"
+              minlength="6"
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="">Email</label>
+            <input
+              type="password"
+              name="password"
+              password
+              #password="ngModel"
+              [(ngModel)]="authUserData.password"
+              class="form-control rounded-0"
+              placeholder="Password"
+              minlength="6"
+              required
+            >
+          </div>
+          <button
+            [disabled]="email.errors || password.errors"
+            type="button"
+            (click)="loginUser()"
+            class="btn btn-outline-success float-left"
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-info float-right"
+            data-toggle="modal"
+            data-target="#modalName"
+          >
+            Register</button>
+        </form>
+
+        <!-- Modal name input -->
+        <div class="modal fade" id="modalName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter a name</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input
+                  type="text"
+                  name="name"
+                  #userName="ngModel"
+                  [(ngModel)]="authUserData.name"
+                  class="form-control rounded-0"
+                  placeholder="name"
+                  minlength="6"
+                  required
+                >
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cancel</button>
+                <button
+                  [disabled]="userName.errors"
+                  type="button"
+                  (click)="registerUser()"
+                  class="btn btn-outline-success float-right"
+                  data-dismiss="modal"
+                >Join</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="snackbar">Error</div>
+
+      </div>
+    </div>
+  </div>
+</section>
