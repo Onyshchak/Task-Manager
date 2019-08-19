@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,12 @@ import { Router } from '@angular/router';
 
 export class AuthComponent implements OnDestroy {
 
-  authUserData = {};
+  loginData = {};
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  loginUser() {
-    this.authService.loginUser(this.authUserData)
+  loginUser(loginData: NgForm) {
+    this.authService.loginUser(loginData.value)
       .subscribe(
         res => {
           localStorage.setItem('token', res.token);
@@ -28,8 +29,18 @@ export class AuthComponent implements OnDestroy {
       )
   }
 
-  registerUser() {
-    this.authService.registerUser(this.authUserData)
+  setLoginData(loginData: NgForm) {
+    this.loginData = loginData.value;
+  }
+
+  registerUser(registerData: NgForm) {
+    if(this.loginData.password !== registerData.value.password) {
+      this.showToast("Passwords are different");
+      registerData.reset()
+      return;
+    }
+    this.loginData.name = registerData.value.name;
+    this.authService.registerUser(this.loginData)
       .subscribe(
         res => {
           localStorage.setItem('token', res.token);

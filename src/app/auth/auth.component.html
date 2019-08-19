@@ -5,29 +5,26 @@
         <h3 class="mb-0">Authorization</h3>
       </div>
       <div class="card-body">
-        <form class="form">
+        <form #loginData="ngForm" class="form">
           <div class="form-group">
-            <label for="">Email</label>
+            <label>Email</label>
             <input
               type="email"
               name="email"
               email
-              #email="ngModel"
-              [(ngModel)]="authUserData.email"
+              ngModel
               class="form-control rounded-0"
-              placeholder="E-mail"
+              placeholder="example@mail.com"
               minlength="6"
               required
             >
           </div>
           <div class="form-group">
-            <label for="">Email</label>
+            <label>Password</label>
             <input
               type="password"
               name="password"
-              password
-              #password="ngModel"
-              [(ngModel)]="authUserData.password"
+              ngModel
               class="form-control rounded-0"
               placeholder="Password"
               minlength="6"
@@ -35,15 +32,17 @@
             >
           </div>
           <button
-            [disabled]="email.errors || password.errors"
+            [disabled]="!loginData.valid"
             type="button"
-            (click)="loginUser()"
+            (click)="loginUser(loginData)"
             class="btn btn-outline-success float-left"
           >
             Login
           </button>
           <button
+            [disabled]="!loginData.valid"
             type="button"
+            (click)="setLoginData(loginData)"
             class="btn btn-outline-info float-right"
             data-toggle="modal"
             data-target="#modalName"
@@ -51,34 +50,50 @@
             Register</button>
         </form>
 
-        <!-- Modal name input -->
+        <!-- Modal confirm password and enter name -->
         <div class="modal fade" id="modalName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Enter a name</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
                 <button type="button" class="close" data-dismiss="modal">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <input
-                  type="text"
-                  name="name"
-                  #userName="ngModel"
-                  [(ngModel)]="authUserData.name"
-                  class="form-control rounded-0"
-                  placeholder="name"
-                  minlength="6"
-                  required
-                >
-              </div>
+              <form  #registerData="ngForm"  class="modal-body">
+                <div class="form-group">
+                  <label>Enter a name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    ngModel
+                    class="form-control rounded-0"
+                    placeholder="Name"
+                    minlength="6"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label>Confirm password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    ngModel
+                    class="form-control rounded-0"
+                    placeholder="Password"
+                    minlength="6"
+                    required
+                  >
+                </div>
+
+              </form>
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cancel</button>
                 <button
-                  [disabled]="userName.errors"
+                  [disabled]="!registerData.valid"
                   type="button"
-                  (click)="registerUser()"
+                  (click)="registerUser(registerData)"
                   class="btn btn-outline-success float-right"
                   data-dismiss="modal"
                 >Join</button>
