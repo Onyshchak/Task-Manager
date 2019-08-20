@@ -11,7 +11,10 @@ import { NgForm } from '@angular/forms';
 
 export class AuthComponent implements OnDestroy {
 
-  loginData = {};
+  loginData = {
+    name: '',
+    password: ''
+  };
 
   constructor(private authService: AuthService, private router: Router) {}
 
