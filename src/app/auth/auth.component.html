@@ -12,7 +12,7 @@
               type="email"
               name="email"
               email
-              ngModel
+              [(ngModel)]="user.email"
               class="form-control rounded-0"
               placeholder="example@mail.com"
               minlength="6"
@@ -24,7 +24,7 @@
             <input
               type="password"
               name="password"
-              ngModel
+              [(ngModel)]="user.password"
               class="form-control rounded-0"
               placeholder="Password"
               minlength="6"
@@ -34,7 +34,7 @@
           <button
             [disabled]="!loginData.valid"
             type="button"
-            (click)="loginUser(loginData)"
+            (click)="loginUser()"
             class="btn btn-outline-success float-left"
           >
             Login
@@ -42,7 +42,6 @@
           <button
             [disabled]="!loginData.valid"
             type="button"
-            (click)="setLoginData(loginData)"
             class="btn btn-outline-info float-right"
             data-toggle="modal"
             data-target="#modalName"
@@ -69,7 +68,7 @@
                     ngModel
                     class="form-control rounded-0"
                     placeholder="Name"
-                    minlength="6"
+                    minlength="3"
                     required
                   >
                 </div>

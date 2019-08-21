@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-login',
@@ -11,15 +12,16 @@ import { NgForm } from '@angular/forms';
 
 export class AuthComponent implements OnDestroy {
 
-  loginData = {
-    name: '',
-    password: ''
+  user: User = {
+    email: '',
+    password: '',
+    name: ''
   };
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  loginUser(loginData: NgForm) {
-    this.authService.loginUser(loginData.value)
+  loginUser() {
+    this.authService.loginUser({email: this.user.email, password: this.user.password})
       .subscribe(
         res => {
           localStorage.setItem('token', res.token);
@@ -32,18 +34,14 @@ export class AuthComponent implements OnDestroy {
       )
   }
 
-  setLoginData(loginData: NgForm) {
-    this.loginData = loginData.value;
-  }
-
   registerUser(registerData: NgForm) {
-    if(this.loginData.password !== registerData.value.password) {
+    if(this.user.password !== registerData.value.password) {
       this.showToast("Passwords are different");
-      registerData.reset()
+      registerData.reset();
       return;
     }
-    this.loginData.name = registerData.value.name;
-    this.authService.registerUser(this.loginData)
+    this.user.name = registerData.value.name;
+    this.authService.registerUser(this.user)
       .subscribe(
         res => {
           localStorage.setItem('token', res.token);
@@ -52,6 +50,7 @@ export class AuthComponent implements OnDestroy {
         err => {
           this.showToast(err.error);
           console.log(err);
+          registerData.reset()
         }
       )
   }
