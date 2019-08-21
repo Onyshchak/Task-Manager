@@ -5,7 +5,6 @@ import { TaskService } from '../task.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-tasks-list',
   templateUrl: './tasks.component.html',
@@ -17,7 +16,15 @@ export class TasksComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private taskService: TaskService, private router: Router) {}
 
   tasks: Task[] = [];
-  modalTask: Task;
+  modalTask: Task = {
+    title: '',
+    description: '',
+    user: {
+      name: '',
+      email: ''
+    },
+    share: ['']
+  };
 
   ngOnInit() {
     this.taskService.getTasks()
@@ -93,7 +100,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         task.title = editedTask.title;
         task.description = editedTask.description;
       }
-    )
+    );
     title.reset();
     description.reset();
   }
