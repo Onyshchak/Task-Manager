@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from './user.model';
 
 @Injectable()
 export class AuthService {
@@ -10,24 +12,24 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  registerUser(user) {
-    return this.http.post<any>(this.registerUrl, user)
+  registerUser(user: User): Observable<User> {
+    return this.http.post<User>(this.registerUrl, user)
   }
 
-  loginUser(user) {
-    return this.http.post<any>(this.loginUrl, user)
+  loginUser(user: User): Observable<User> {
+    return this.http.post<User>(this.loginUrl, user)
   }
 
-  loggedIn() {
+  loggedIn(): boolean {
     return !!localStorage.getItem('token')
   }
 
-  logoutUser() {
+  logoutUser(): void {
     localStorage.removeItem('token')
     this.router.navigate(['/auth'])
   }
 
-  getToken() {
+  getToken(): string {
     return localStorage.getItem('token')
   }
 }

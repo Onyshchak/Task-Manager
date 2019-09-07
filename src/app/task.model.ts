@@ -1,9 +1,10 @@
 export interface Task {
-  title: string,
-  description: string,
-  share: [string],
+  _id?: string
+  title: string
+  description: string
+  share: string[]
   user: {
-    name: string,
+    name: string
     email: string
   }
 }

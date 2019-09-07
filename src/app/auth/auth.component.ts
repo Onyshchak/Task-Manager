@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { User } from '../user.model';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +13,12 @@ import { User } from '../user.model';
 
 export class AuthComponent implements OnDestroy {
 
-  user: User = {
-    email: '',
-    password: '',
-    name: ''
-  };
+  user: User = {} as User;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+              private router: Router) {}
 
-  loginUser() {
+  loginUser(): void {
     this.authService.loginUser({email: this.user.email, password: this.user.password})
       .subscribe(
         res => {
@@ -34,8 +32,8 @@ export class AuthComponent implements OnDestroy {
       )
   }
 
-  registerUser(registerData: NgForm) {
-    if(this.user.password !== registerData.value.password) {
+  registerUser(registerData: NgForm): void {
+    if (this.user.password !== registerData.value.password) {
       this.showToast("Passwords are different");
       registerData.reset();
       return;
@@ -55,11 +53,11 @@ export class AuthComponent implements OnDestroy {
       )
   }
 
-  showToast(err) {
-    const toast = document.getElementById("snackbar");
+  showToast(err: string): void {
+    const toast = document.getElementById('snackbar');
     toast.innerHTML = err;
-    toast.className = "show";
-    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+    toast.className = 'show';
+    timer(3000).subscribe(() => toast.className = toast.className.replace('show', ''))
   }
 
   ngOnDestroy() {}

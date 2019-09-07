@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { TaskService } from '../task.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-task',
@@ -13,7 +13,7 @@ export class NewTaskComponent implements OnDestroy {
 
   constructor(public taskService: TaskService) {}
 
-  onConfirm(form: NgForm) {
+  onConfirm(form: NgForm): void {
     this.taskService.createTask(form.value.title, form.value.description).subscribe(
       res => {
         this.showToast('Task created');
@@ -24,11 +24,11 @@ export class NewTaskComponent implements OnDestroy {
     form.resetForm();
   }
 
-  showToast(message) {
-    const toast = document.getElementById("snackbar");
+  showToast(message: string): void {
+    const toast = document.getElementById('snackbar');
     toast.innerHTML = message;
-    toast.className = "show";
-    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+    toast.className = 'show';
+    timer(3000).subscribe(() => toast.className = toast.className.replace('show', ''))
   }
 
   ngOnDestroy() {}

@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { TaskService } from '../task.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-list',
@@ -13,20 +15,18 @@ import { Router } from '@angular/router';
 
 export class TasksComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private taskService: TaskService, private router: Router) {}
+  constructor(private authService: AuthService,
+              private taskService: TaskService,
+              private router: Router) {}
 
   tasks: Task[] = [];
-  modalTask: Task = {
-    title: '',
-    description: '',
-    user: {
-      name: '',
-      email: ''
-    },
-    share: ['']
-  };
+  modalTask: Task = {} as Task;
 
   ngOnInit() {
+    this.tasksSubscribe()
+  }
+
+  tasksSubscribe(): void {
     this.taskService.getTasks()
       .subscribe(
         tasks => {
@@ -42,12 +42,12 @@ export class TasksComponent implements OnInit, OnDestroy {
       )
   }
 
-  setCurrentTask(task) {
+  setCurrentTask(task: Task): void {
     this.modalTask = task
   }
 
-  newShare(task, email) {
-    const newEmail = email.value;
+  newShare(task: Task, email: NgForm): void {
+    const newEmail: string = email.value;
     this.taskService.newShare(task._id, newEmail).subscribe(
       res => {
         this.showToast('Shared');
@@ -62,8 +62,8 @@ export class TasksComponent implements OnInit, OnDestroy {
     email.reset()
   }
 
-  removeShare(task, email) {
-    const removedEmail = email.value;
+  removeShare(task: Task, email: NgForm): void {
+    const removedEmail: string = email.value;
     this.taskService.removeShare(task._id, removedEmail).subscribe(
       res => {
         this.showToast('Share removed');
@@ -81,7 +81,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     email.reset()
   }
 
-  editTask(task, title, description) {
+  editTask(task: Task, title: NgForm, description: NgForm): void {
     const editedTask = {
       title: title.value,
       description: description.value
@@ -105,7 +105,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     description.reset();
   }
 
-  deleteTask(task) {
+  deleteTask(task: Task): void {
     this.taskService.deleteTask(task._id).subscribe(
       res => {
         this.showToast('Deleted');
@@ -122,11 +122,11 @@ export class TasksComponent implements OnInit, OnDestroy {
     );
   }
 
-  showToast(err) {
-    const toast = document.getElementById("snackbar");
+  showToast(err: string): void {
+    const toast = document.getElementById('snackbar');
     toast.innerHTML = err;
-    toast.className = "show";
-    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+    toast.className = 'show';
+    timer(3000).subscribe(() => toast.className = toast.className.replace('show', ''))
   }
 
   ngOnDestroy() {}

@@ -16,23 +16,23 @@ export class TaskService {
     return this.http.get<Task[]>(this.tasksUrl)
   }
 
-  newShare(taskId, email) {
+  newShare(taskId: string, email: string) {
     return this.http.patch<Task>(`${this.taskShare}/new/${taskId}`, {access: email})
   }
 
-  removeShare(taskId, email) {
+  removeShare(taskId: string, email: string) {
     return this.http.patch<string>(`${this.taskShare}/remove/${taskId}`, {access: email})
   }
 
-  editTask(taskId, title, description): Observable<Task> {
+  editTask(taskId: string, title: string, description: string): Observable<Task> {
     return this.http.patch<Task>(`${this.tasksUrl}/${taskId}`, {title: title, description: description})
   }
 
-  createTask(title, description) {
+  createTask(title: string, description: string): Observable<Task> {
     return this.http.post<Task>(this.tasksUrl, {title: title, description: description})
   }
 
-  deleteTask(taskId): Observable<void> {
+  deleteTask(taskId: string): Observable<void> {
     return this.http.delete<void>(`${this.tasksUrl}/${taskId}`)
   }
 }
