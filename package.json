@@ -30,7 +30,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongojs": "^2.6.0",
-    "mongoose": "^5.6.10",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.1",
     "rxjs": "~6.3.3",
     "server": "^1.0.19",
